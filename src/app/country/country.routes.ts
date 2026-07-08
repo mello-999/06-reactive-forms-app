@@ -4,7 +4,7 @@ import { CountryPage } from "./pages/country-page/country-page";
 
 
 
-export const authRoutes: Routes = [
+export const countryRoutes: Routes = [
 
 {
  path: '',
