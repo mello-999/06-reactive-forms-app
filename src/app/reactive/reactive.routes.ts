@@ -30,7 +30,7 @@ export const reactiveRoutes: Routes = [
     {
         path: '**',
         redirectTo: 'basic',
-    }
+    },
  ],
 },
 

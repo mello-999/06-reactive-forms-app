@@ -7,7 +7,7 @@ export const routes: Routes = [
     loadChildren: () => import('./reactive/reactive.routes').then((m) => m.reactiveRoutes),
 },
 {
-    path: 'reactive',
+    path: 'auth',
     loadChildren: () => import('./auth/auth.routes'),
 },
 {
