@@ -26,7 +26,9 @@ export class BasicPage {
 //     inStorage: new FormControl(0),
 
 isValidField( FieldName: string ): boolean | null {
-   return !! this.myForm.controls[FieldName].errors
+   return  (this.myForm.controls[FieldName].errors &&
+            this.myForm.controls[FieldName].touched
+          );
 }
 
 getFieldError( FieldName: string): string | null {
@@ -52,8 +54,20 @@ getFieldError( FieldName: string): string | null {
      return null;
    
   } 
+onSave() {
+  if (this.myForm.invalid) {
+    this.myForm.markAllAsTouched();
+    return;
+  }
 
+  console.log(this.myForm.value);
+  
+  this.myForm.reset({
+    price: 0,
+    inStorage: 0,
+  });
+  
+  
+  }
 
- }
-
-
+}
