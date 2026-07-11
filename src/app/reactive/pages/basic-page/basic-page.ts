@@ -13,10 +13,10 @@ export class BasicPage {
 
    private fb = inject(FormBuilder);
 
-   myForm = this.fb.group({
+   myForm: FormGroup = this.fb.group({
      name: ['', [Validators.required, Validators.minLength(3)]],
      price: [0, [Validators.required, Validators.min(10)]],
-     inStorage: [0, Validators.required ],
+     inStorage: [0, [Validators.required, Validators.min(0)] ],
    });
 
 
@@ -24,6 +24,36 @@ export class BasicPage {
 //     name: new FormControl(''),
 //     price: new FormControl(0),
 //     inStorage: new FormControl(0),
+
+isValidField( FieldName: string ): boolean | null {
+   return !! this.myForm.controls[FieldName].errors
+}
+
+getFieldError( FieldName: string): string | null {
+
+ if ( !this.myForm.controls[FieldName] ) return null;
+      
+ const errors = this.myForm.controls[FieldName].errors ?? {};
+
+ for( const key of Object.keys(errors) ) {
+   switch(key) {
+    case 'required':
+      return 'este campo es requerido';
+
+      case 'minlength':
+        return `Minimo de ${ errors['minlength'].requiredLength } caracteres.`
+
+      case 'min':
+        return `valor minimo de ${ errors['min'].min }`
+   }
+   }
+
+   
+     return null;
+   
+  } 
+
+
  }
 
 
