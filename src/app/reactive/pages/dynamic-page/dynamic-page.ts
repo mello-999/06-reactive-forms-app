@@ -47,6 +47,7 @@ onDeleteFavorite(index: number) {
 }
   
 onSubmit() {
+  console.log(this.myForm.value);
   this.myForm.markAllAsTouched();
 }
 
