@@ -4,7 +4,10 @@
 <div class="row">
     <div class="col">
 
-        <form autocomplete="off">
+        <form
+        [formGroup]="myForm"
+        (ngSubmit)="onSubmit()"
+         autocomplete="off">
 
             <!-- Nombre -->
             <div class="row mb-3">
@@ -12,11 +15,18 @@
                 <div class="col-sm-9">
                     <input type="text"
                            class="form-control"
-                           placeholder="Nombre del usuario">
+                           placeholder="Nombre del usuario"
+                           formControlName="name">
+                           
 
-                    <span class="form-text text-danger">
-                        Debe de ser en formato de nombre y apellido
-                    </span>
+                    @if (myForm.get('name')?.touched && myForm.get('name')?.hasError('required')) {
+                        <span 
+                        class="form-text text-danger">
+                            El nombre es obligatorio.
+    
+                        </span>
+                    }
+
                 </div>
             </div>
 
@@ -26,10 +36,19 @@
                 <div class="col-sm-9">
                     <input type="email"
                            class="form-control"
-                           placeholder="Email del usuario">
-                    <span class="form-text text-danger">
-                        mensaje de error del email
-                    </span>
+                           placeholder="Email del usuario"
+                           formControlName="email">
+                    @if (myForm.get('email')?.touched && myForm.get('email')?.hasError('required')) {
+                        <span class="form-text text-danger">
+                            El email es obligatorio.
+                        </span>
+                    }
+                    @if (myForm.get('email')?.touched && myForm.get('email')?.hasError('email')) {
+                        <span class="form-text text-danger">
+                            El email no tiene un formato válido.
+                        </span>
+                    }
+
                 </div>
             </div>
             
@@ -39,10 +58,27 @@
                 <div class="col-sm-9">
                     <input type="text"
                            class="form-control"
-                           placeholder="Nombre código del usuario">
+                           placeholder="Nombre código del usuario"
+                           formControlName="username">
+               @if (myForm.get('username')?.touched && myForm.get('username')?.hasError('required')) {
+                   <span class="form-text text-danger">
+                        El username es obligatorio.
+                   </span>
+                }
+
+               @if (myForm.get('username')?.touched && myForm.get('username')?.hasError('minlength')) {
+                   <span class="form-text text-danger">
+                        El username debe tener mínimo 6 caracteres.
+                   </span>
+                }
+                @if (myForm.get('username')?.touched && myForm.get('username')?.hasError('noStrider')) {
+
                     <span class="form-text text-danger">
-                         El username no puede ser Strider
+                        El username no puede ser Strider
                     </span>
+                }
+
+
                 </div>
             </div>
 
@@ -52,11 +88,22 @@
                 <div class="col-sm-9">
                     <input type="password"
                            class="form-control"
-                           placeholder="Password de su cuenta">
+                           placeholder="Password de su cuenta"
+                           formControlName="password">
 
+                @if (myForm.get('password')?.touched && myForm.get('password')?.hasError('required')) {
                     <span class="form-text text-danger">
-                         La contraseña debe de ser mayor de 6 caracteres.
+                         La contraseña es obligatoria.
                     </span>
+                }
+
+                @if (myForm.get('password')?.touched && myForm.get('password')?.hasError('minlength')) {
+                    <span class="form-text text-danger">
+                         La contraseña debe tener mínimo  6 caracteres.
+                    </span>
+                } 
+
+                    
                 </div>
             </div>
 
@@ -66,11 +113,21 @@
                 <div class="col-sm-9">
                     <input type="password"
                            class="form-control"
-                           placeholder="Confirmar la contraseña">
+                           placeholder="Confirmar la contraseña"
+                           formControlName="password2">
 
+               @if (myForm.get('password2')?.touched && myForm.get('password2')?.hasError('required')) {
+                   <span class="form-text text-danger">
+                        Debe confirmar la contraseña.
+                   </span>
+                }
+
+                @if (myForm.errors?.['passwordMismatch'] && myForm.get('password2')?.touched) {
                     <span class="form-text text-danger">
-                         Las contraseñas deben de ser iguales
-                    </span>
+                        Las contraseñas deben ser iguales.
+                   </span>
+                }
+                    
                 </div>
             </div>
 
@@ -79,8 +136,10 @@
                 <div class="col">
                     <button class="btn btn-primary float-end"
                             type="submit">
+                            
                         Crear
                     </button>
+                    
                 </div>
             </div>
 
@@ -91,23 +150,52 @@
 
 
 <h2>Form Valid: </h2>
+<pre>{{ myForm.valid }}</pre>
 <h2>Form Status: </h2>
+<pre>{{ myForm.status }}</pre>
 <h2>Form Pending: </h2>
+<pre>{{ myForm.pending }}</pre>
 <h2>Form errors</h2>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ myForm.errors | json}}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ 'formulario' | json }}</pre>
+valor:
+<pre>{{ myForm.get('name')?.value | json }}</pre>
+valido:
+<pre>{{ myForm.get('name')?.valid | json }}</pre>
+errores:
+<pre>{{ myForm.get('name')?.errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ 'formulario' | json }}</pre>
+valor:
+<pre>{{ myForm.get('email')?.value | json }}</pre>
+valido:
+<pre>{{ myForm.get('email')?.valid | json }}</pre>
+errores:
+<pre>{{ myForm.get('email')?.errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ 'formulario' | json }}</pre>
+valor:
+<pre>{{ myForm.get('username')?.value | json }}</pre>
+valido:
+<pre>{{ myForm.get('username')?.valid | json }}</pre>
+errores:
+<pre>{{ myForm.get('username')?.errors | json }}</pre>
 
 
 <h5>Password</h5>
-<pre>{{ 'formulario' | json }}</pre>
+valor:
+<pre>{{ myForm.get('password')?.value | json }}</pre>
+valido:
+<pre>{{ myForm.get('password')?.valid | json }}</pre>
+errores:
+<pre>{{ myForm.get('password')?.errors | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ 'formulario' | json }}</pre>
+valor:
+<pre>{{ myForm.get('password2')?.value | json }}</pre>
+valido:
+<pre>{{ myForm.get('password2')?.valid | json }}</pre>
+errores:
+<pre>{{ myForm.get('password2')?.errors | json }}</pre>
+
