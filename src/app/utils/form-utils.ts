@@ -1,20 +1,45 @@
-import { Form, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
+import { FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 
 
 
 export class FormUtils {
 
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+
+
 static getTextError(errors: ValidationErrors) {
   for( const key of Object.keys(errors) ) {
    switch(key) {
+
     case 'required':
       return 'este campo es requerido';
+      
+      case 'email':
+        return 'El email no tiene un formato válido';
 
       case 'minlength':
         return `Minimo de ${ errors['minlength'].requiredLength } caracteres.`
 
       case 'min':
         return `valor minimo de ${ errors['min'].min }`
+
+      case 'noStrider':
+        return 'El username no puede ser Strider';
+
+      case 'pattern':
+        if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
+          
+          return 'El correo electronico no es permitido';
+        }
+        
+        return 'Error de patron contra expresion angular';
+          
+
+      default:
+        return `Error no controlado: ${key}`;
+
    }
   }
   return null;

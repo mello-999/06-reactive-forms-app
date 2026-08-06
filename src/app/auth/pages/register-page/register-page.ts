@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
   selector: 'app-register-page',
@@ -11,6 +12,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractContro
   templateUrl: './register-page.html',
 })
 export class RegisterPage {
+
+  FormUtils = FormUtils;
 
   myForm: FormGroup;
 
@@ -62,14 +65,17 @@ export class RegisterPage {
     this.myForm = this.fb.group({
       name:['', [ 
         Validators.required,
+        Validators.pattern(FormUtils.namePattern),
       ]],
       email:['', [
         Validators.required,
-        Validators.email
+        Validators.email,
+        Validators.pattern(FormUtils.emailPattern)
         ]],
       username:['', [
         Validators.required,
         Validators.minLength(6),
+        Validators.pattern(FormUtils.notOnlySpacesPattern),
         this.usernameNoStrider.bind(this)
       ]],
       password:['',[

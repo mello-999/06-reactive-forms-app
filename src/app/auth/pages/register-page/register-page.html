@@ -19,12 +19,12 @@
                            formControlName="name">
                            
 
-                    @if (myForm.get('name')?.touched && myForm.get('name')?.hasError('required')) {
-                        <span 
-                        class="form-text text-danger">
-                            El nombre es obligatorio.
-    
+                    @if (FormUtils.isValidField(myForm, 'name')) {
+                        <span class=" form-text text-danger"> 
+                        {{ FormUtils.getFieldError(myForm, 'name') }}
                         </span>
+                        
+    
                     }
 
                 </div>
@@ -38,16 +38,13 @@
                            class="form-control"
                            placeholder="Email del usuario"
                            formControlName="email">
-                    @if (myForm.get('email')?.touched && myForm.get('email')?.hasError('required')) {
+
+                    @if (FormUtils.isValidField(myForm, 'email')) {
                         <span class="form-text text-danger">
-                            El email es obligatorio.
+                            {{ FormUtils.getFieldError(myForm,'email') }}
                         </span>
                     }
-                    @if (myForm.get('email')?.touched && myForm.get('email')?.hasError('email')) {
-                        <span class="form-text text-danger">
-                            El email no tiene un formato válido.
-                        </span>
-                    }
+                    
 
                 </div>
             </div>
@@ -60,24 +57,14 @@
                            class="form-control"
                            placeholder="Nombre código del usuario"
                            formControlName="username">
-               @if (myForm.get('username')?.touched && myForm.get('username')?.hasError('required')) {
-                   <span class="form-text text-danger">
-                        El username es obligatorio.
-                   </span>
-                }
 
-               @if (myForm.get('username')?.touched && myForm.get('username')?.hasError('minlength')) {
-                   <span class="form-text text-danger">
-                        El username debe tener mínimo 6 caracteres.
-                   </span>
-                }
-                @if (myForm.get('username')?.touched && myForm.get('username')?.hasError('noStrider')) {
+               @if (FormUtils.isValidField(myForm, 'username')) {
 
-                    <span class="form-text text-danger">
-                        El username no puede ser Strider
-                    </span>
-                }
+                     <span class="form-text text-danger">
+                      {{ FormUtils.getFieldError(myForm, 'username') }}
+                     </span>
 
+               }
 
                 </div>
             </div>
