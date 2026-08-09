@@ -1,11 +1,18 @@
 import { AbstractControl, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 
-
+async function sleep() {
+   return new Promise( resolve => {
+    setTimeout(() => {
+      resolve(true)
+    }, 2500);
+   })
+}
 
 export class FormUtils {
 
   static isFieldOneEqualFieldTwo(field1: string, field2: string) {
     return(formGroup: AbstractControl) => {
+
       const field1Value = formGroup.get(field1)?.value;
       const field2Value = formGroup.get(field2)?.value;
 
@@ -29,11 +36,14 @@ static getTextError(errors: ValidationErrors) {
       case 'email':
         return 'El email no tiene un formato válido';
 
+      case 'emailTaken':
+        return 'El correo electronico ya esta siendo usado por otro usuario';
+
       case 'minlength':
-        return `Minimo de ${ errors['minlength'].requiredLength } caracteres.`
+        return `Minimo de ${ errors['minlength'].requiredLength } caracteres.`;
 
       case 'min':
-        return `valor minimo de ${ errors['min'].min }`
+        return `valor minimo de ${ errors['min'].min }`;
 
       case 'noStrider':
         return 'El username no puede ser Strider';
@@ -89,5 +99,22 @@ static getTextError(errors: ValidationErrors) {
 
       return FormUtils.getTextError(errors)
 
- } 
+ }
+ 
+   static async checkingServerResponse(control: AbstractControl):Promise<ValidationErrors | null> {
+     console.log('Validando contra servidor');
+    await sleep();
+
+    const formValue = control.value;  
+
+    if ( formValue === 'hola@mundo.com') {
+      return {
+        emailTaken: true,
+      };
+    }
+
+    return null;
+   } 
+
+
 }

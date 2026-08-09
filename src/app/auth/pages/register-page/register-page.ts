@@ -67,11 +67,16 @@ export class RegisterPage {
         Validators.required,
         Validators.pattern(FormUtils.namePattern),
       ]],
-      email:['', [
+      email:['', 
+        [
         Validators.required,
         Validators.email,
-        Validators.pattern(FormUtils.emailPattern)
-        ]],
+        Validators.pattern(FormUtils.emailPattern)       
+        ],
+        [
+          FormUtils.checkingServerResponse
+        ]
+      ],
       username:['', [
         Validators.required,
         Validators.minLength(6),
