@@ -85,9 +85,9 @@ export class RegisterPage {
 
       password2:['',  Validators.required ],
 
-    },
+    }, 
     {
-       validators: this.passwordMatchValidator
+       validators: FormUtils.isFieldOneEqualFieldTwo('password', 'password2')
     });
 
   }
@@ -99,11 +99,5 @@ export class RegisterPage {
 
 
 
-// Formulario
-//  name => obligatorio
-//  email => obligatorio y un mail (Validators.email?)
-//  username => obligatorio, minLength 6
-//  passwword => obligatorio, minLength 6
-//  passwword 2 => obligatorio (confirmaPassword seria un mejor nombre)
 
 

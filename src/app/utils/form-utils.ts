@@ -1,8 +1,18 @@
-import { FormArray, FormGroup, ValidationErrors } from "@angular/forms";
+import { AbstractControl, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 
 
 
 export class FormUtils {
+
+  static isFieldOneEqualFieldTwo(field1: string, field2: string) {
+    return(formGroup: AbstractControl) => {
+      const field1Value = formGroup.get(field1)?.value;
+      const field2Value = formGroup.get(field2)?.value;
+
+        return field1Value === field2Value ? null : { passwordsnotEqual: true };
+    };
+  }
+
 
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
