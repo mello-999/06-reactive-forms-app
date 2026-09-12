@@ -81,7 +81,8 @@ export class RegisterPage {
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(FormUtils.notOnlySpacesPattern),
-        this.usernameNoStrider.bind(this)
+        // this.usernameNoStrider.bind(this)
+        FormUtils.noStrider
       ]],
       password:['',[
         Validators.required,

@@ -46,7 +46,7 @@ static getTextError(errors: ValidationErrors) {
         return `valor minimo de ${ errors['min'].min }`;
 
       case 'noStrider':
-        return 'El username no puede ser Strider';
+        return 'El username no puede ser Strider cambialo por f viejita';
 
       case 'pattern':
         if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
@@ -116,5 +116,17 @@ static getTextError(errors: ValidationErrors) {
     return null;
    } 
 
+   static noStrider (control: AbstractControl): ValidationErrors | null {
 
+    const username = control.value?.toLowerCase();
+
+    if (username === 'strider') {
+      return {
+        noStrider: true
+      }
+    }
+    
+    return null;
+
+   }
 }
