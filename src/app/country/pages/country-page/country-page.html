@@ -1,7 +1,7 @@
 <h1 class="mt-3">Selectores anidados</h1>
 <hr />
 
-<form>
+<form [formGroup]="myForm">
   <!-- Region -->
   <div class="row mb-3">
     <div class="col">
@@ -56,4 +56,5 @@
 <code>
   <!-- {{ 'myForm.value' | json }} -->
 </code>
-<p>is form valid: {{ 'myForm.valid' }}</p>
+<p>is form valid: {{ myForm.valid }}</p>
+<p>Value: {{ myForm.value | json }}</p>
