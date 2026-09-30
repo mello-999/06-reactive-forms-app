@@ -19,7 +19,7 @@ export class CountryService {
     ];
     
     get regions(): string [] {
-        return [...this.regions];
+        return [...this._regions];
     }
 
    getCountriesByRegion( region: string ): Observable<Country[]> {

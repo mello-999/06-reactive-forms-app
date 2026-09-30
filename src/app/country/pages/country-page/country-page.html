@@ -9,9 +9,12 @@
       <select formControlName="region" class="form-control">
         <option value="">-- Seleccione Continente --</option>
         
-        <!-- <option [value]="region">
-          {{ region }}
-        </option> -->
+        @for (region of regions(); track region) {
+          <option [value]="region">
+            {{ region }}
+          </option>
+        }
+          
         
       </select>
     </div>

@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CountryService } from '../../services/country.service';
+import { Country } from '../../interfaces/country.interface';
 
 @Component({
   selector: 'app-country-page',
@@ -14,6 +15,9 @@ export class CountryPage {
   countryService = inject(CountryService) 
 
   regions = signal( this.countryService.regions )
+
+  countriesByRegion = signal<Country[]>([])
+  borders = signal<Country[]>([])
 
   myForm = this.fb.group({
     region: ['', Validators.required],
