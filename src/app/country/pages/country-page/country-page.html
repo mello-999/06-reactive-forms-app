@@ -28,9 +28,12 @@
       <select formControlName="country" class="form-control">
         <option value="">-- Seleccione País --</option>
 
-        <!-- <option [value]="country.cca3">
-          {{ country.name }}
-        </option> -->
+        @for (country of countriesByRegion(); track country.codes.alpha_3) {
+          <option [value]="country.codes.alpha_3">
+            {{ country.names.common }}
+          </option>
+        }
+          
 
       </select>
     </div>

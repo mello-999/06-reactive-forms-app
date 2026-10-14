@@ -3,7 +3,7 @@ export interface Country {
 }
 
 export interface Data {
-    objects: Object[];
+    objects: CountryObject[];
     meta:    Meta;
 }
 
@@ -17,7 +17,7 @@ export interface Meta {
     duration:   number;
 }
 
-export interface Object {
+export interface CountryObject {
     names:   Names;
     codes:   Codes;
     borders: string[];

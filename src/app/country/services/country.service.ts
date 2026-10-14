@@ -1,47 +1,59 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Country } from '../interfaces/country.interface';
+import { Observable, of, map } from 'rxjs';
+import { Country, CountryObject } from '../interfaces/country.interface';
+import { environment } from '../../../environments/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CountryService {
+
+  private baseUrl = 'https://api.restcountries.com/countries/v5';
+  private http = inject(HttpClient);
+
+  private headers = new HttpHeaders({
+    Authorization: `Bearer ${environment.apiKey}`
+  });
+
+  private _regions = [
+    'Africa',
+    'Americas',
+    'Asia',
+    'Europe',
+    'Oceania'
+  ];
+
+  get regions(): string[] {
+    return [...this._regions];
+  }
+
+  getCountriesByRegion(region: string): Observable<CountryObject[]> {
+    if (!region) return of([]);
+
+    const url =
+      `${this.baseUrl}?region=${encodeURIComponent(region)}` +
+      '&response_fields=names,codes.alpha_3,borders&limit=100';
+
+    return this.http
+    .get<Country>(url,{ headers: this.headers })
+    .pipe(
+        map(response => response.data.objects)
+    );
+      
     
-    private baseUrl = 'https://api.restcountries.com/countries/v5';
-    private http = inject(HttpClient);
-
-    private _regions = [
-        'Africa',
-        'Americas',
-        'Asia',
-        'Europe',
-        'Oceania',
-
-    ];
+  }
     
-    get regions(): string [] {
-        return [...this._regions];
-    }
 
-   getCountriesByRegion( region: string ): Observable<Country[]> {
-    if ( !region ) return of([]); 
 
-    console.log( {region} );
+  getCountryByAlphaCode(alphaCode: string): Observable<Country> {
+    const url =
+      `${this.baseUrl}/codes.alpha_3/${encodeURIComponent(alphaCode)}`;
 
-    const url = `${ this.baseUrl }/region/${ region }?region=Americas`;
-    return this.http.get<Country[]>(url);
+    return this.http.get<Country>(url, {
+      headers: this.headers
+    });
+  }
 
-   }
-
-   getCountryByAlphaCode( alphaCode: string ): Observable<Country> {
-
-    const url = `${ this.baseUrl }/alpha/${ alphaCode }?region=Americas`;
-    return this.http.get<Country>(url);
-   } 
-
-   getCountryBorderByCodes( borders: string[]) {
+  getCountryBorderByCodes(borders: string[]) {
     // TODO: por hacer
-   }
-
-
-   }
-
+  }
+}
